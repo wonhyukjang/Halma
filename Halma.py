@@ -33,17 +33,6 @@ weight_W = [weight_B[::-1][i][::-1] for i in range(16)]
 
 weight_B[10][15] = 720
 weight_B[15][15] = 1000
-# weight_B[10][15] = 0
-# weight_B[9][15] = 0
-# weight_B[8][15] = 0
-# weight_B[7][15] = 0
-# weight_B[6][15] = 0
-
-# weight_B[15][6] = 0
-# weight_B[15][10] = 0
-# weight_B[15][9] = 0
-# weight_B[15][8] = 0
-# weight_B[15][7] = 0
 
 for i in range(10):
     weight_B[15][i] = 0
@@ -58,20 +47,6 @@ for i in range(9):
     weight_B[i][14] = 0
 for i in range(8):
     weight_B[i][13] = 0
-
-
-# for i in range(2):
-#     for j in range(5):
-#         weight_B[i+14][j+11] = 1000
-# for i in range(1):
-#     for j in range(4):
-#         weight_B[i+13][j+12] = 1000
-#     for t in range(3):
-#         weight_B[i+12][t+13] = 1000
-#     for z in range(2):
-#         weight_B[i+11][z+14] = 1000
-
-
 
 weight_W[15][6] = 0
 weight_W[15][10] = 0
@@ -317,7 +292,6 @@ class Halma():
 
         for i in range(len(moves)):
             newMove = Board(moves[i], v, player)
-            # print(newMove.board)
             new_sequences = sequences.copy()
             new_sequences.append(seq[i])
 
@@ -463,21 +437,9 @@ class Halma():
     def lastPosition(self, board, color):
         if color == 'B':
             if self.score(board, color, 18):
-                # for i in range(3):
-                #     for j in range(4):
-                #         if board[i+13][j+12] == 'B':
-                #             continue
-                #         else:
-                #             return None
                 return self.find(board, color)
         elif color == 'W':
             if self.score(board, color, 18):
-                # for i in range(3):
-                #     for j in range(4):
-                #         if board[i][j] == 'W':
-                #             continue
-                #         else:
-                #             return None
                 return self.find(board, color)
 
                             
@@ -505,7 +467,6 @@ class Halma():
                 else:
                     idx1 = i
                     idx2 = j
-                # print("idx1, idx2: ", idx1, idx2)
 
                 if last_Position != None:
                     if color == 'B':
@@ -523,11 +484,9 @@ class Halma():
                     if last_Flag  == 1:
                         if idx1 != last_Position[0] and idx2 != last_Position[1]:
                             continue
-                    # print(last_Flag)      
                     if flag == 0:
                         jumpList = []
                         skipCord = []
-                        # if last_Flag == 0:
                         if self.goalPosition(idx1, idx2, color):
                             x_Pos, y_Pos = self.checkGoalInit(idx1, idx2, color)
                             terminal_Flag = 1
@@ -536,8 +495,7 @@ class Halma():
                                 x_Pos, y_Pos = self.checkInit(idx1, idx2, color)
                             else:
                                 x_Pos, y_Pos = self.checkLast(idx1,idx2,color)
-                        # else:
-                        #     x_Pos, y_Pos = self.checkLast(idx1, idx2, color)
+
                         for t in range(len(x_Pos)):
                             dummyX = idx1 + x_Pos[t]
                             dummyY = idx2 + y_Pos[t]
@@ -591,8 +549,6 @@ class Halma():
                             if color[0] == 'B':
                                 if dummyX - idx1 >= 0 or dummyY - idx2 >= 0:
                                     if finish_Flag == 0:
-                                        # print(finish_Flag)
-                                        # print("Out_Init_Flag: ",output_Flag)
                                         if (dummyX, dummyY) in W_init:
                                             if (idx1, idx2) not in W_init:
                                                 finish_Flag = 1
@@ -626,7 +582,6 @@ class Halma():
                             if color[0] == 'W':
                                 if dummyX - idx1 <= 0 or dummyY - idx2 <= 0:
                                     if finish_Flag == 0:                                        
-                                        # print("Out_Init_Flag: ",output_Flag)
                                         if (dummyX, dummyY) in B_init:
                                             if (idx1, idx2) not in B_init:
                                                 finish_Flag = 1
@@ -707,8 +662,6 @@ class Halma():
                                                         if color[0] == 'B':
                                                             if dummyX - idx1 >= 0 or dummyY - idx2 >= 0:
                                                                 if finish_Flag == 0:
-                                                                    # print(finish_Flag)
-                                                                    # print("Out_Init_Flag: ",output_Flag)
                                                                     if (dummyX, dummyY) in W_init:
                                                                         if (idx1, idx2) not in W_init:
                                                                             finish_Flag = 1
@@ -726,8 +679,6 @@ class Halma():
                                                                             jumpCost = MAX_VALUE
                                                                         else:
                                                                             continue
-                            #                                     heapq.heappush(validGrid, (
-                            #                                         self.evaluation(newBoard, color) + jumpCost, jumpCost, count, newBoard, sequence))
                                                                 if finish_Flag == 1:
                                                                     if (dummyX, dummyY) in W_init:
                                                                         if (idx1, idx2) not in W_init:
@@ -749,7 +700,6 @@ class Halma():
                                                         if color[0] == 'W':
                                                             if dummyX - idx1 <= 0 or dummyY - idx2 <= 0:
                                                                 if finish_Flag == 0:                                        
-                                                                    # print("Out_Init_Flag: ",output_Flag)
                                                                     if (dummyX, dummyY) in B_init:
                                                                         if (idx1, idx2) not in B_init:
                                                                             finish_Flag = 1
@@ -783,41 +733,6 @@ class Halma():
                                                                         self.evaluation(newBoard, color) + jumpCost, jumpCost, count,
                                                                         newBoard,
                                                                         j_seq))
-                                                        
-#                                                         if finish_Flag == 0:
-#                                                             print("From: ", idx1,idx2)
-#                                                             print("To: ",dummyX, dummyY)
-
-#                                                             # print("Out_Init_Flag: ",output_Flag)
-#                                                             if (dummyX, dummyY) in B_init:
-#                                                                 if (idx1, idx2) not in B_init:
-#                                                                     finish_Flag = 1
-#                                                                     validGrid = []
-#                                                                     jumpCost = self.MAX_VALUE
-#                                                                 else:
-#                                                                     jumpCost = -1
-#                                                                     if dummyY -1 == idx2 and dummyX +1 == idx1:
-#                                                                         jumpCost = self.MAX_VALUE - 1000
-#                                                                     elif dummyY +1 == idx2 and dummyX - 1 == idx1:
-#                                                                         jumpCost = self.MAX_VALUE - 1000    
-
-
-#                                                         else:
-#                                                             print("From: ", idx1,idx2)
-#                                                             print("To: ",dummyX, dummyY)
-                                                            
-#                                                             if (dummyX, dummyY) in B_init:
-#                                                                 if (idx1, idx2) not in B_init:
-#                                                                     jumpCost = self.MAX_VALUE
-#                                                                 else:
-#                                                                     continue
-
-
-
-#                                                         heapq.heappush(validGrid, (
-#                                                             self.evaluation(newBoard, color) + jumpCost, jumpCost, count,
-#                                                             newBoard,
-#                                                             j_seq))
                                                     else:
                                                         continue
                                                 else:
@@ -844,16 +759,12 @@ class Halma():
                         for t in range(len(x_Pos)):
                             dummyX = idx1 + x_Pos[t]
                             dummyY = idx2 + y_Pos[t]
-    #                        print("DummyX, DummyY: ", dummyX, dummyY)
                             # Check if we can get to position by jump
-
 
                             if self.checkValid(dummyX, dummyY, color):
                                 if board[dummyX][dummyY] != '.':
                                     dummyX += x_Pos[t]
                                     dummyY += y_Pos[t]
-    #                                 print("Jump", dummyX, dummyY)
-
                                     if self.checkValid(dummyX, dummyY, color):
                                         if board[dummyX][dummyY] == '.':
 
@@ -863,15 +774,9 @@ class Halma():
                                                 continue
 
                                             if output_Flag == 0:
-                                                # print("Out_Init_Flag: ",output_Flag)
                                                 if self.checkPosition(dummyX, dummyY, color) == False:
                                                     output_Flag = 1
-                                                    # print("Out_Init_Flag: ",output_Flag)
                                                     validGrid = []
-
-
-
-
                                             newBoard = copy.deepcopy(board)
                                             newBoard[dummyX][dummyY] = color
                                             newBoard[idx1][idx2] = '.'
@@ -889,10 +794,8 @@ class Halma():
                                 # Can move, but can't jump
                                 else:
                                     if output_Flag == 0:
-                                        # print("Out_Init_Flag: ",output_Flag)
                                         if self.checkPosition(dummyX, dummyY, color) == False:
                                             output_Flag = 1
-                                            # print("Out_Init_Flag: ",output_Flag)
                                             validGrid = []
 
 
@@ -941,16 +844,12 @@ class Halma():
                                     x, y = self.checkInit(jumpList[w][0], jumpList[w][1], color)
 
                                     cord = [[l, s] for l, s in zip(x, y)]
-                                    # print(cord)
                                     cord = [x for x in cord if x != skipCord[w]]
-                                    # print(cord)
                                     origin_seq = jumpList[w][2]
                                     for t in range(len(cord)):
 
                                         dummyX = jumpList[w][0] + cord[t][0]
                                         dummyY = jumpList[w][1] + cord[t][1]
-                                        # print("Jump From: ", dummyX, dummyY)
-
                                         # Check if we can get to position by jump
                                         if self.checkValid(dummyX, dummyY, color):
                                             if board[dummyX][dummyY] != '.':
@@ -963,8 +862,6 @@ class Halma():
                                                             visited.append((dummyX, dummyY))
                                                         else:
                                                             continue
-                                                        # print("Jump To: ", dummyX, dummyY)
-
                                                         if output_Flag == 0:
                                                             if self.checkPosition(dummyX, dummyY, color) == False:
                                                                 output_Flag = 1
@@ -1011,8 +908,6 @@ class Halma():
                                             continue
                                 jumpList = copy.deepcopy(jumpList2)
                                 skipCord = copy.deepcopy(skipCord2)
-        # if self.score(board, player, 15):
-        #     heapq._heapify_max(validGrid)
         heapq.heapify(validGrid)
         return ([[x[3] for x in validGrid], [x[1] for x in validGrid], [x[4] for x in validGrid]])
 
@@ -1028,8 +923,6 @@ class Halma():
             if (x, y) in W_init:
                 return True
             return False
-
-            # Play Game with alpha-beta pruning
 
     def playHalma(self, board, alpha, beta, currentDepth, player, time):
         # showBoard(board)
